@@ -830,8 +830,8 @@ while running:
     elif gamemode == 3:  # Credits
         gartext = "thanks for helping me design the ux of this game! :]"
         jaxtext = "thanks for helping me learn python! :D"
-        garmage = pygame.image.load(rootdir + 'files/garrett.png')
-        jaxmage = pygame.image.load(rootdir + 'files/jax.png')
+        garmage = pygame.image.load(rootdir + 'files/trevenaunt.png')
+        jaxmage = pygame.image.load(rootdir + 'files/grafaiai.png')
         S.blit(garmage, (50, 50))
         S.blit(jaxmage, (50, 150))
         buttons = [Button("Credits", (W / 2, 32, -1, -1), 0, font=font_40),
