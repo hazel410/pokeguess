@@ -142,7 +142,7 @@ sfx_yip.set_volume(.1)
 sfx_bye.set_volume(.1)
 sfx_che.set_volume(.1)
 sfx_cor.set_volume(.1)
-sfx_pip.set_volume(.05)
+sfx_pip.set_volume(.02)
 mute = False
 
 # silly easter egg
@@ -519,7 +519,7 @@ class Button:
                                 sfx_bye.set_volume(.1)
                                 sfx_che.set_volume(.1)
                                 sfx_cor.set_volume(.1)
-                                sfx_pip.set_volume(.05)
+                                sfx_pip.set_volume(.02)
                                 mute = False
                         elif self.mode == -8:
                             scrollhell = not scrollhell
