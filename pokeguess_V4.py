@@ -271,6 +271,9 @@ def ssp3(numbers, target):
                             if abs(tar - smm) > abs(tar - (arr[i] + arr[j] + arr[k])):
                                 smm = arr[i] + arr[j] + arr[k]
                                 ind = [i, j, k]
+                                 # if exact target achieved and len(ind) != 3; return that exactly
+                                if tar is smm and len(ind) != 3:
+                                    return smm, ind
     if len(ind) != 3:
         ind = [0, 0, 0]
         smm = 0
