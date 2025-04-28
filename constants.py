@@ -1,0 +1,31 @@
+import pygame
+
+ROOTDIR = ''
+CSV_LOCATION = ROOTDIR + 'files/sheet_smart.csv'
+SMART_TYPE = "SSP-T"
+SMART_GEN = "SSP-G"
+GIF_COUNT = 649
+GIF_LIST = []
+WINDOW_HEIGHT = 480
+WINDOW_WIDTH = 720
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (128, 128, 128)
+GREEN = (40, 120, 40)
+NEON = (120, 245, 66)
+LIGHT_CORNFLOWER_BLUE_2 = (152, 196, 236)
+LIGHT_CORNFLOWER_BLUE_1 = (100, 166, 225)
+LIGHT_PURPLE_1 = (148, 115, 200)
+DARK_MAGENTA_2 = (126, 0, 70)
+BACKGROUND_COLOR = DARK_MAGENTA_2
+PHYSICS_MAGNITUDE = 10
+PHYSICS_GRAVITY = 0
+PHYSICS_BOUNCE = -1
+PHYSICS_ANGLES = (0, 359)
+PHYSICS_MAX_COLLISIONS = (7, 10)
+RUNNING_LOCALLY = True
+FONT_32 = pygame.font.Font('freesansbold.ttf', 32)
+FONT_24 = pygame.font.Font('freesansbold.ttf', 24)
+FONT_40 = pygame.font.Font('freesansbold.ttf', 40)
+FONT_18 = pygame.font.Font('freesansbold.ttf', 18)
+
