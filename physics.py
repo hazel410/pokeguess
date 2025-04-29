@@ -9,19 +9,18 @@ class OBJECT:
     self.spawn_tbh = True
     self.draw_bounds = False
     self.active_objects = []
-    self.angle = random.randrange(c.PHYSICS_ANGLES) * (np.pi / 180)
+    self.init_angle = random.randrange(c.PHYSICS_ANGLES[0], c.PHYSICS_ANGLES[1]) * (np.pi / 180)
     self.is_tbh = spawn_tbh
     if spawn_tbh:
       self.image = pygame.image.load(c.TBH_LOCATION)
     else:
       self.image = funcs.GIF(c.BLAHAJ_LOCATION, scale=1)
     self.size = self.image.get_size()
-    self.init_angle = random.randrange(c.PHYSICS_ANGLES) * (np.pi / 180)
-    self.xpos = random.randrange(0, c.WINDOW_WIDTH - (self.size[0] / 2))
-    self.ypos = random.randrange(0, c.WINDOW_HEIGHT - (self.size[1] / 2))
+    self.xpos = random.randrange(0, round(c.WINDOW_WIDTH - (self.size[0] / 2)))
+    self.ypos = random.randrange(0, round(c.WINDOW_HEIGHT - (self.size[1] / 2)))
     self.xvel = c.PHYSICS_MAGNITUDE * np.cos(self.init_angle)
     self.yvel = c.PHYSICS_MAGNITUDE * np.sin(self.init_angle)
-    self.collision_limit = random.randrange(c.PHYSICS_MAX_COLLISIONS)
+    self.collision_limit = random.randrange(c.PHYSICS_MAX_COLLISIONS[0], c.PHYSICS_MAX_COLLISIONS[1])
     self.times_collided = 0
     self.dead = False
   
@@ -40,4 +39,7 @@ class OBJECT:
         self.times_collided += 1
     elif self.xpos > c.WINDOW_WIDTH or self.xpos < 0 - self.size[0] or self.ypos > c.WINDOW_HEIGHT:
       self.dead = True
+  
+  def draw(self):
+    pass
     

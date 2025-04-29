@@ -90,8 +90,8 @@ class BUTTON:
         current_line = current_line + ' ' + word
       
       # if this is the word that makes things too big, remove it and add it to the next
-      if self.font.size(current_line)[0] > self.xlen + (2 * c.WRAP_X_PADDING):
-        current_line = current_line[0:current_line.rfind(" ")]
+      if self.font.size(current_line)[0] > self.xlen - (2 * c.WRAP_X_PADDING):
+        current_line = current_line[0:current_line.rfind(' ')]
         wrapped_text.append(current_line)
         current_row += 1
         current_line = word

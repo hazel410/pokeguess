@@ -90,7 +90,7 @@ class MAIN():
   def loadHome(self):
     self.active_gif.render()
     self.active_buttons = [
-      button.BUTTON(self.screen, "PokéGuess V4", (c.WINDOW_WIDTH / 2, 32, -1, -1), 0, back=False, font=c.FONT_40),
+      button.BUTTON(self.screen, "PokéGuess V5", (c.WINDOW_WIDTH / 2, 32, -1, -1), 0, back=False, font=c.FONT_40),
       button.BUTTON(self.screen, "Play", (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (1 / 5) + 16, 160, 70), 4),
       button.BUTTON(self.screen, "Settings", (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (2 / 5) + 16, 160, 70), 2),
       button.BUTTON(self.screen, "Credits", (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (3 / 5) + 16, 160, 70), 3),
@@ -129,13 +129,13 @@ class MAIN():
     self.reset_gamemode = True
     self.active_buttons = [
       button.BUTTON(self.screen, "Home", (c.WINDOW_WIDTH - 36 - 5, 20 + 5, 72, 40), 1, font=c.FONT_24),
-      button.BUTTON(self.screen, '', (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * .17, 250, 2), 0, background_color=c.WHITE, hover_color=c.WHITE),
+      button.BUTTON(self.screen, '', (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * .17, 250, 2), 0, button_color=c.WHITE, hover_color=c.WHITE),
       button.BUTTON(self.screen, "No", (c.WINDOW_WIDTH * (13 / 16), c.WINDOW_HEIGHT * .75, 120, 75), -14, font=c.FONT_40),
       button.BUTTON(self.screen, "Yes", (c.WINDOW_WIDTH * (10 / 16), c.WINDOW_HEIGHT * .75, 120, 75), -13, font=c.FONT_40),
       button.BUTTON(self.screen, "Undo", (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * .9, 252, 50), -15, hover_color=color_undo),
       button.BUTTON(self.screen, question_number, (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * .08, -1, -1), 0),
       button.BUTTON(self.screen, pokemon_number, (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * .14, -1, -1), 0, font=c.FONT_24),
-      button.BUTTON(self.screen, question_text, (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * (2 / 5), 252, 200), 0, font=c.FONT_24, wrap=True, background_color=c.GRAY, hover_color=c.GRAY)
+      button.BUTTON(self.screen, question_text, (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * (2 / 5), 252, 200), 0, font=c.FONT_24, wrap=True, button_color=c.GRAY, hover_color=c.GRAY)
     ]
 
   def loadRetry(self):
@@ -184,7 +184,7 @@ class MAIN():
         elif argument == -1:
           self.quit = True
         elif argument == -3:
-          self.active_objects.append(physics.OBJECT())
+          self.active_objects.append(physics.OBJECT(self.spawn_tbh))
         elif argument == -7:
           sfx.toggle_mute(self.is_muted)
           self.is_muted = not self.is_muted
@@ -195,18 +195,18 @@ class MAIN():
         elif argument == -10:
           self.spawn_tbh = not self.spawn_tbh
         elif argument == -13:
-          self.GAME_LOGIC.main('Yes')
+          self.handleGameplay(1)
         elif argument == -14:
-          self.GAME_LOGIC.main('No')
+          self.handleGameplay(0)
         elif argument == -15:
-          self.GAME_LOGIC.main('Undo')
+          self.handleGameplay(-1)
       elif pygame.mouse.get_pressed()[2]: # right click
         if argument == -3:
           self.active_objects = []
           pygame.mixer.pause()
       elif self.scroll_on_silly: # scrolling
         if argument == -3:
-          self.active_objects.append(physics.OBJECT())
+          self.active_objects.append(physics.OBJECT(self.spawn_tbh))
 
   def handlePhysics(self):
     for object in self.active_objects:
@@ -216,4 +216,27 @@ class MAIN():
         self.active_objects.remove(object)
         pygame.mixer.find_channel(True).play(sfx.bye)
     
+  def handleGameplay(self, player_input):
+    if player_input == 1: # YES
+      self.GAME_LOGIC.input(1)
+      if self.GAME_LOGIC.num_of_pokemon == 1:
+        self.gamemode = 5
+        pygame.mixer.pause()
+    elif player_input == 0: # NO
+      self.GAME_LOGIC.input(0)
+      if self.GAME_LOGIC.num_of_pokemon == 1:
+        self.gamemode = 1
+        pygame.mixer.pause()
+    elif player_input == -1: # UNDO
+      self.GAME_LOGIC.input(-1)
+    
+    self.GAME_LOGIC.upkeep()
+    if self.GAME_LOGIC.num_of_pokemon == 1 and self.GAME_LOGIC.is_win and self.gamemode == 4:
+      pygame.mixer.find_channel(True).play(sfx.che)
+      self.GAME_LOGIC.is_win = False
+    
+    self.GAME_LOGIC.question()
+    
+
+
 MAIN()
