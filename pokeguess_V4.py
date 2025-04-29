@@ -124,8 +124,6 @@ font_32 = pygame.font.Font('freesansbold.ttf', 32)
 font_24 = pygame.font.Font('freesansbold.ttf', 24)
 font_40 = pygame.font.Font('freesansbold.ttf', 40)
 font_18 = pygame.font.Font('freesansbold.ttf', 18)
-dbwid = 137
-dbhei = 34
 
 # sounds!!
 pygame.mixer.music.load(rootdir + 'files/mps/HGSS - Pewter City.mp3')
