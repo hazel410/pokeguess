@@ -6,7 +6,7 @@ pygame.mixer.init()
 pygame.init()
 
 import constants as c
-import sounds as sfx
+import sounds
 import functions
 import logic
 import physics
@@ -26,7 +26,7 @@ class MAIN():
     pygame.event.set_allowed(pygame.QUIT)
     self.clock = pygame.time.Clock()
     self.GAME_LOGIC = logic.GAME_LOGIC()
-    self.SFX = sfx.SFX()
+    self.SFX = sounds.SFX()
 
     # loop vars
     self.reset_gamemode = False

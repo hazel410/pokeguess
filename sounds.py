@@ -5,19 +5,19 @@ import constants as c
 if c.RUNNING_LOCALLY:
   file_extension = '.mp3'
 else:
-  file_extension = '.ogg'
+  file_extension = '-pygbag.ogg'
 
 class SFX:
-  async def __init__(self):
-    await pygame.mixer.music.load(c.ASYNC_PREFIX + c.MP3_LOCATION + 'HGSS - Pewter City' + file_extension)
+  def __init__(self):
+    pygame.mixer.music.load(c.MP3_LOCATION + 'HGSS - Pewter City' + file_extension)
     pygame.mixer.music.set_volume(0.1)
     pygame.mixer.music.play(loops=-1)
-    self.pop = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'pop' + file_extension)
-    self.yip = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'yippee' + file_extension)
-    self.bye = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'roblox-bye' + file_extension)
-    self.che = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'children-cheering' + file_extension)
-    self.cor = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'correct' + file_extension)
-    self.pip = await pygame.mixer.Sound(c.ASYNC_PREFIX + c.MP3_LOCATION + 'metal-pipe-clang' + file_extension)
+    self.pop = pygame.mixer.Sound(c.MP3_LOCATION + 'pop' + file_extension)
+    self.yip = pygame.mixer.Sound(c.MP3_LOCATION + 'yippee' + file_extension)
+    self.bye = pygame.mixer.Sound(c.MP3_LOCATION + 'roblox-bye' + file_extension)
+    self.che = pygame.mixer.Sound(c.MP3_LOCATION + 'children-cheering' + file_extension)
+    self.cor = pygame.mixer.Sound(c.MP3_LOCATION + 'correct' + file_extension)
+    self.pip = pygame.mixer.Sound(c.MP3_LOCATION + 'metal-pipe-clang' + file_extension)
     self.pop.set_volume(.1)
     self.yip.set_volume(.1)
     self.bye.set_volume(.1)
