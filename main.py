@@ -1,11 +1,6 @@
-import math
-import numpy as np
 import asyncio
 import pygame
-import time
 import random
-import pandas as pd
-from PIL import Image
 
 pygame.mixer.init()
 pygame.init()

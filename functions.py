@@ -1,11 +1,5 @@
 import pygame
-import constants as c
-import time
-import logic
-import pandas as pd
-import sounds as sfx
 from PIL import Image
-import random
 from math import floor
 
 # subset sum function, for subset of len three

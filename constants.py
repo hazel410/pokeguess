@@ -1,16 +1,21 @@
 import pygame
 
-ROOTDIR = ''
-CSV_LOCATION = ROOTDIR + 'files/sheet_smart.csv'
-TBH_LOCATION = ROOTDIR + 'files/tbh.png'
-BLAHAJ_LOCATION = ROOTDIR + 'files/blahaj.gif'
-GIF_LOCATION = ROOTDIR + 'files/sprites/'
-MP3_LOCATION = ROOTDIR + 'files/mps/'
-SMART_TYPE_HEADER = "SSP-T"
-SMART_GEN_HEADER = "SSP-G"
-GIF_COUNT = 649
-WINDOW_HEIGHT = 460
-WINDOW_WIDTH = 690
+# Configs
+PHYSICS_DEBUG = False
+RUNNING_LOCALLY = False
+
+# Update when new pokemon
+NUMBER_OF_POKEMON_GENS = 9
+NUMBER_OF_POKEMON_TYPES = 18
+
+# Physics Constants
+PHYSICS_MAGNITUDE = 10
+PHYSICS_GRAVITY = 0
+PHYSICS_ELASTICITY = 1
+PHYSICS_MAX_COLLISIONS = [7, 10]
+PHYSICS_AIR_RESISTANCE = 0
+
+# Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
@@ -21,22 +26,32 @@ LIGHT_CORNFLOWER_BLUE_1 = (100, 166, 225)
 LIGHT_PURPLE_1 = (148, 115, 200)
 DARK_MAGENTA_2 = (126, 0, 70)
 BACKGROUND_COLOR = DARK_MAGENTA_2
-PHYSICS_MAGNITUDE = 10
-PHYSICS_GRAVITY = 0
-PHYSICS_ELASTICITY = 1
-PHYSICS_MAX_COLLISIONS = [7, 10]
-PHYSICS_AIR_RESISTANCE = 0
-PHYSICS_DEBUG = False
-RUNNING_LOCALLY = True
+
+# File Locations
+ROOTDIR = ''
+CSV_LOCATION = ROOTDIR + 'files/sheet_smart.csv'
+TBH_LOCATION = ROOTDIR + 'files/tbh.png'
+BLAHAJ_LOCATION = ROOTDIR + 'files/blahaj.gif'
+GIF_LOCATION = ROOTDIR + 'files/sprites/'
+MP3_LOCATION = ROOTDIR + 'files/mps/'
+
+# Dimensions
+WINDOW_HEIGHT = 460
+WINDOW_WIDTH = 690
+WRAP_X_PADDING = 10
+WRAP_Y_PADDING = .5
+
+# Fonts
 FONT_32 = pygame.font.Font('freesansbold.ttf', 32)
 FONT_24 = pygame.font.Font('freesansbold.ttf', 24)
 FONT_40 = pygame.font.Font('freesansbold.ttf', 40)
 FONT_18 = pygame.font.Font('freesansbold.ttf', 18)
 FONT_SIZE_TEST_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?!\"\'"
-WRAP_X_PADDING = 10
-WRAP_Y_PADDING = .5
-NUMBER_OF_POKEMON_GENS = 9
-NUMBER_OF_POKEMON_TYPES = 18
+
+# Other
+SMART_TYPE_HEADER = "SSP-T"
+SMART_GEN_HEADER = "SSP-G"
+GIF_COUNT = 649
 GIF_LIST = ['abomasnow', 'abra', 'absol', 'accelgor', 'aerodactyl', 'aggron', 'aipom', 'alakazam', 'alomomola',
            'altaria', 'ambipom', 'amoonguss', 'ampharos', 'anorith', 'arbok', 'arcanine', 'arceus', 'archen',
            'archeops', 'ariados', 'armaldo', 'aron', 'articuno', 'audino', 'axew', 'azelf', 'azumarill', 'azurill',
@@ -108,4 +123,3 @@ GIF_LIST = ['abomasnow', 'abra', 'absol', 'accelgor', 'aerodactyl', 'aggron', 'a
            'whimsicott', 'whirlipede', 'whiscash', 'whismur', 'wigglytuff', 'wingull', 'wobbuffet', 'woobat', 'wooper',
            'wormadam-plant', 'wurmple', 'wynaut', 'xatu', 'yamask', 'yanma', 'yanmega', 'zangoose', 'zapdos',
            'zebstrika', 'zekrom', 'zigzagoon', 'zoroark', 'zorua', 'zubat', 'zweilous']
-
