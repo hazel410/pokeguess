@@ -2,7 +2,6 @@ import pandas as pd
 import constants as c
 import functions as func
 import pygame
-import sounds as sfx
 import time
 
 class GAME_LOGIC:
@@ -222,7 +221,6 @@ def export(screen, staticgame):
   file = pd.DataFrame(dict([(key, pd.Series(value)) for key, value in csvinterme.items()]))
   filetrans = file.transpose()
   filetrans.to_csv(c.ROOTDIR + 'export.csv')
-  pygame.mixer.find_channel(True).play(sfx.cor)
   return 0
 
 def monsolver(pokemon_number):

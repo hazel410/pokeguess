@@ -29,11 +29,13 @@ BACKGROUND_COLOR = DARK_MAGENTA_2
 
 # File Locations
 ROOTDIR = ''
-CSV_LOCATION = ROOTDIR + 'files/sheet_smart.csv'
-TBH_LOCATION = ROOTDIR + 'files/tbh.png'
-BLAHAJ_LOCATION = ROOTDIR + 'files/blahaj.gif'
-GIF_LOCATION = ROOTDIR + 'files/sprites/'
-MP3_LOCATION = ROOTDIR + 'files/mps/'
+ASSETS_LOCATION = 'assets/'
+ASYNC_PREFIX = 'async:'
+CSV_LOCATION = ROOTDIR + ASSETS_LOCATION + 'sheet_smart.csv'
+TBH_LOCATION = ROOTDIR + ASSETS_LOCATION + 'tbh.png'
+BLAHAJ_LOCATION = ROOTDIR + ASSETS_LOCATION + 'blahaj.gif'
+GIF_LOCATION = ROOTDIR + ASSETS_LOCATION + 'sprites/'
+MP3_LOCATION = ROOTDIR + ASSETS_LOCATION + 'mps/'
 
 # Dimensions
 WINDOW_HEIGHT = 460

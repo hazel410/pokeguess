@@ -1,6 +1,7 @@
 import pygame
 from PIL import Image
 from math import floor
+import constants as c
 
 # subset sum function, for subset of len three
 def ssp3(numbers, target):
@@ -34,13 +35,13 @@ def ssp3(numbers, target):
     return smm, ind
 
 class GIF:
-  def __init__(self, screen, gif_location, position, speed=1, scale=3, orient='center', flipx=False):
+  async def __init__(self, screen, gif_location, position, speed=1, scale=3, orient='center', flipx=False):
     self.screen = screen
     self.position = position
     self.speed = speed
     self.orient = orient
     self.flipx = flipx
-    self.active_image = Image.open(gif_location)
+    self.active_image = await Image.open(c.ASYNC_PREFIX + gif_location)
     self.num_frames = 1
     self.index = 0
     self.frame_list = []

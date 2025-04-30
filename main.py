@@ -26,6 +26,7 @@ class MAIN():
     pygame.event.set_allowed(pygame.QUIT)
     self.clock = pygame.time.Clock()
     self.GAME_LOGIC = logic.GAME_LOGIC()
+    self.SFX = sfx.SFX()
 
     # loop vars
     self.reset_gamemode = False
@@ -183,7 +184,7 @@ class MAIN():
         elif argument == -3:
           self.active_objects.append(physics.OBJECT(self.screen, self.spawn_tbh))
         elif argument == -7:
-          sfx.toggle_mute(self.is_muted)
+          self.SFX.toggle_mute(self.is_muted)
           self.is_muted = not self.is_muted
         elif argument == -8:
           self.scroll_on_silly = not self.scroll_on_silly
@@ -212,7 +213,7 @@ class MAIN():
       object.draw()
       if object.dead:
         self.active_objects.remove(object)
-        pygame.mixer.find_channel(True).play(sfx.bye)
+        pygame.mixer.find_channel(True).play(self.SFX.bye)
     
   def handleGameplay(self, player_input):
     if player_input == 1: # YES
@@ -230,7 +231,7 @@ class MAIN():
     
     self.GAME_LOGIC.upkeep()
     if self.GAME_LOGIC.num_of_pokemon == 1 and self.GAME_LOGIC.is_win and self.gamemode == 4:
-      pygame.mixer.find_channel(True).play(sfx.che)
+      pygame.mixer.find_channel(True).play(self.SFX.che)
       self.GAME_LOGIC.is_win = False
     
     self.GAME_LOGIC.question()
