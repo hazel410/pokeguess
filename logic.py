@@ -188,56 +188,67 @@ class GAME_LOGIC:
       elif self.best_category in self.category_list[0:(len(self.category_list) - 2)]:
           self.best_question = self.question_list[self.category_sums.index(self.best_value)]
 
-  def export(self):
-    """
-    a function that solves every pokemon and exports that data
+def export(screen):
+  """
+  a function that solves every pokemon and exports that data
 
-    :return: 0 if succesful, -1 elsewise
-    """
+  :return: 0 if succesful, -1 elsewise
+  """
 
-    staticgame = self.GAME_LOGIC()
-    numberomon = len(staticgame.main_df)
-    csvinterme = {}
-    t0 = time.perf_counter()
-    for pokemon in range(numberomon):
-      csvinterme[staticgame.main_df.iloc[pokemon]['Category']] = self.monsolver(pokemon)
-      percent = round((pokemon / numberomon) * 100, 2)
-      t1 = time.perf_counter()
-      te = t1 - t0
-      pygame.draw.rect(self.screen, c.BACKGROUND_COLOR, (c.WINDOW_WIDTH * (2 / 5), c.WINDOW_HEIGHT / 4, 1000, 1000))
-      pygame.draw.rect(self.screen, c.GRAY, ((c.WINDOW_WIDTH / 2) - 50, (c.WINDOW_HEIGHT / 2), 200, 50))
-      pygame.draw.rect(self.screen, c.WHITE, ((c.WINDOW_WIDTH / 2) - 50, (c.WINDOW_HEIGHT / 2), round(percent * 2), 50))
-      perrend = c.FONT_24.render(str(percent) + "%", True, c.WHITE)
-      monrend = c.FONT_24.render('mons left: ' + str(numberomon - pokemon), True, c.WHITE)
-      timrend = c.FONT_24.render('time spent: ' + str(round(te)) + ' secs', True, c.WHITE)
-      perrect = perrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) + 175, (c.WINDOW_HEIGHT / 2) + 12])
-      monrect = monrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) - 45, (c.WINDOW_HEIGHT / 2) - 40])
-      timrect = timrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) - 45, (c.WINDOW_HEIGHT / 2) + 75])
-      self.screen.blit(perrend, perrect)
-      self.screen.blit(monrend, monrect)
-      self.screen.blit(timrend, timrect)
-      for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-          return -1
-      pygame.display.flip()
-    file = pd.DataFrame(dict([(key, pd.Series(value)) for key, value in csvinterme.items()]))
-    filetrans = file.transpose()
-    filetrans.to_csv(c.ROOTDIR + 'out.csv')
-    pygame.mixer.find_channel(True).play(sfx.cor)
-    return 0
+  staticgame = GAME_LOGIC()
+  numberomon = len(staticgame.main_df)
+  csvinterme = {}
+  t0 = time.perf_counter()
+  for pokemon in range(numberomon):
+    csvinterme[staticgame.main_df.iloc[pokemon]['Category']] = monsolver(pokemon)
+    percent = round((pokemon / numberomon) * 100, 2)
+    t1 = time.perf_counter()
+    te = t1 - t0
+    pygame.draw.rect(screen, c.BACKGROUND_COLOR, (c.WINDOW_WIDTH * (2 / 5), c.WINDOW_HEIGHT / 4, 1000, 1000))
+    pygame.draw.rect(screen, c.GRAY, ((c.WINDOW_WIDTH / 2) - 50, (c.WINDOW_HEIGHT / 2), 200, 50))
+    pygame.draw.rect(screen, c.WHITE, ((c.WINDOW_WIDTH / 2) - 50, (c.WINDOW_HEIGHT / 2), round(percent * 2), 50))
+    perrend = c.FONT_24.render(str(percent) + "%", True, c.WHITE)
+    monrend = c.FONT_24.render('mons left: ' + str(numberomon - pokemon), True, c.WHITE)
+    timrend = c.FONT_24.render('time spent: ' + str(round(te)) + ' secs', True, c.WHITE)
+    perrect = perrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) + 175, (c.WINDOW_HEIGHT / 2) + 12])
+    monrect = monrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) - 45, (c.WINDOW_HEIGHT / 2) - 40])
+    timrect = timrend.get_rect(topleft=[(c.WINDOW_WIDTH / 2) - 45, (c.WINDOW_HEIGHT / 2) + 75])
+    screen.blit(perrend, perrect)
+    screen.blit(monrend, monrect)
+    screen.blit(timrend, timrect)
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        return -1
+    pygame.display.flip()
+  file = pd.DataFrame(dict([(key, pd.Series(value)) for key, value in csvinterme.items()]))
+  filetrans = file.transpose()
+  filetrans.to_csv(c.ROOTDIR + 'out.csv')
+  pygame.mixer.find_channel(True).play(sfx.cor)
+  return 0
 
-  def monsolver(self, pokemon_number):
-    """
-    solves a given pokemon and returns data
+def monsolver(pokemon_number):
+  """
+  solves a given pokemon and returns data
 
-    :param pokemon_number: int; the number of the pokemon being solved for
-    :return: list; data yk
-    """
+  :param pokemon_number: int; the number of the pokemon being solved for
+  :return: list; data yk
+  """
 
-    driver = self.GAME_LOGIC()
-    monu = pokemon_number
-    info = driver.main_df.iloc[monu]
-    val = 0
+  driver = GAME_LOGIC()
+  monu = pokemon_number
+  info = driver.main_df.iloc[monu]
+  val = 0
+  if driver.is_stalemate:
+    val = 1 if info['Category'] == driver.main_dict[driver.category_list[0]][0] else 0
+  elif driver.best_category == c.SMART_TYPE_HEADER:
+    val = info[driver.ssct[0]] + info[driver.ssct[1]] + info[driver.ssct[2]]
+  elif driver.best_category == c.SMART_GEN_HEADER:
+    val = info[driver.sscg[0]] + info[driver.sscg[1]] + info[driver.sscg[2]]
+  elif driver.best_category in driver.category_list[0:(len(driver.category_list) - 2)]:
+    val = info[driver.best_category]
+  ans = 1 if val > 0 else 0
+  output = ['Question ' + str(driver.question_num), driver.num_of_pokemon, driver.best_category, ans, driver.category_sums]
+  while driver.num_of_pokemon > 1:
     if driver.is_stalemate:
       val = 1 if info['Category'] == driver.main_dict[driver.category_list[0]][0] else 0
     elif driver.best_category == c.SMART_TYPE_HEADER:
@@ -247,44 +258,33 @@ class GAME_LOGIC:
     elif driver.best_category in driver.category_list[0:(len(driver.category_list) - 2)]:
       val = info[driver.best_category]
     ans = 1 if val > 0 else 0
-    output = ['Question ' + str(driver.question_num), driver.num_of_pokemon, driver.best_category, ans, driver.category_sums]
-    while driver.num_of_pokemon > 1:
-      if driver.is_stalemate:
-        val = 1 if info['Category'] == driver.main_dict[driver.category_list[0]][0] else 0
-      elif driver.best_category == c.SMART_TYPE_HEADER:
-        val = info[driver.ssct[0]] + info[driver.ssct[1]] + info[driver.ssct[2]]
-      elif driver.best_category == c.SMART_GEN_HEADER:
-        val = info[driver.sscg[0]] + info[driver.sscg[1]] + info[driver.sscg[2]]
-      elif driver.best_category in driver.category_list[0:(len(driver.category_list) - 2)]:
-        val = info[driver.best_category]
-      ans = 1 if val > 0 else 0
-      driver.input(ans)
-      driver.upkeep()
-      if driver.is_stalemate and driver.num_of_pokemon > 1:
-        output.append('Question ' + str(driver.question_num))
-        output.append(driver.num_of_pokemon)
-        output.append('Stalemate')
-        output.append(ans)
-        output.append(driver.category_sums)
-      elif driver.best_category == c.SMART_TYPE_HEADER:
-        output.append('Question ' + str(driver.question_num))
-        output.append(driver.num_of_pokemon)
-        output.append(driver.ssct)
-        output.append(ans)
-        output.append(driver.category_sums)
-      elif driver.best_category == c.SMART_GEN_HEADER:
-        output.append('Question ' + str(driver.question_num))
-        output.append(driver.num_of_pokemon)
-        output.append(driver.sscg)
-        output.append(ans)
-        output.append(driver.category_sums)
-      elif driver.best_category != 'Category':
-        output.append('Question ' + str(driver.question_num))
-        output.append(driver.num_of_pokemon)
-        output.append(driver.best_category)
-        output.append(ans)
-        output.append(driver.category_sums)
-      else:
-        pass
+    driver.input(ans)
+    driver.upkeep()
+    if driver.is_stalemate and driver.num_of_pokemon > 1:
+      output.append('Question ' + str(driver.question_num))
+      output.append(driver.num_of_pokemon)
+      output.append('Stalemate')
+      output.append(ans)
+      output.append(driver.category_sums)
+    elif driver.best_category == c.SMART_TYPE_HEADER:
+      output.append('Question ' + str(driver.question_num))
+      output.append(driver.num_of_pokemon)
+      output.append(driver.ssct)
+      output.append(ans)
+      output.append(driver.category_sums)
+    elif driver.best_category == c.SMART_GEN_HEADER:
+      output.append('Question ' + str(driver.question_num))
+      output.append(driver.num_of_pokemon)
+      output.append(driver.sscg)
+      output.append(ans)
+      output.append(driver.category_sums)
+    elif driver.best_category != 'Category':
+      output.append('Question ' + str(driver.question_num))
+      output.append(driver.num_of_pokemon)
+      output.append(driver.best_category)
+      output.append(ans)
+      output.append(driver.category_sums)
+    else:
+      pass
 
-    return output  
+  return output  

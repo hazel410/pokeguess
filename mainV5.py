@@ -61,32 +61,35 @@ class MAIN():
       self.screen.fill(c.BACKGROUND_COLOR)
       self.fps = self.clock.get_fps()
       self.mouse_pos = pygame.mouse.get_pos()
-      
-      if self.gamemode == 1:
-        self.loadHome()
-      elif self.gamemode == 2:
-        self.loadSettings()
-      elif self.gamemode == 3:
-        self.loadCredits()
-      elif self.gamemode == 4:
-        self.loadGameplay()
-      elif self.gamemode == 5:
-        self.loadRetry()
+      self.loadActiveScreen()
+      self.export_text = "Export"
       
       if self.reset_gamemode and self.gamemode != 4:
         self.GAME_LOGIC = logic.GAME_LOGIC()
         self.reset_gamemode = False
       self.active_buttons.append(button.BUTTON(self.screen, "FPS: " + str(round(self.fps)), (50, 25, 72, 40), 0, font=c.FONT_24, back=False))
-      self.active_buttons.append(button.BUTTON(self.screen, 'Silly', (30, c.WINDOW_HEIGHT - 25, 50, 30), -3, font=c.FONT_18, hide=True))
-
+      self.active_buttons.append(button.BUTTON(self.screen, ':3', (30, c.WINDOW_HEIGHT - 25, 30, 30), -3, font=c.FONT_18))
       self.displayButtons()
       self.handleEvents()
       self.handleClickArgs()
       self.handlePhysics()
+      
       if self.quit:
         return
       await asyncio.sleep(0)
   
+  def loadActiveScreen(self):
+    if self.gamemode == 1:
+      self.loadHome()
+    elif self.gamemode == 2:
+      self.loadSettings()
+    elif self.gamemode == 3:
+      self.loadCredits()
+    elif self.gamemode == 4:
+      self.loadGameplay()
+    elif self.gamemode == 5:
+      self.loadRetry()
+
   def loadHome(self):
     self.active_gif.render()
     self.active_buttons = [
@@ -104,7 +107,7 @@ class MAIN():
     scroll_text = "chill" if self.scroll_on_silly else "hell"
     self.active_buttons = [
       button.BUTTON(self.screen, "Settings", (c.WINDOW_WIDTH / 2, 32, -1, -1), 0, font=c.FONT_40),
-      button.BUTTON(self.screen, "DEV: exp", (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (2 / 5) + 16, 160, 70), -9),
+      button.BUTTON(self.screen, self.export_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (2 / 5) + 16, 160, 70), -9),
       button.BUTTON(self.screen, "Home", (c.WINDOW_WIDTH - 36 - 5, 20 + 5, 72, 40), 1, font=c.FONT_24),
       button.BUTTON(self.screen, mute_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (1 / 5) + 16, 160, 70), -7, font=c.FONT_24),
       button.BUTTON(self.screen, silly_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (3 / 5) + 16, 160, 70), -10),
@@ -191,7 +194,8 @@ class MAIN():
         elif argument == -8:
           self.scroll_on_silly = not self.scroll_on_silly
         elif argument == -9:
-          functions.export()
+          if logic.export(self.screen) == -1:
+            return -1
         elif argument == -10:
           self.spawn_tbh = not self.spawn_tbh
         elif argument == -13:
@@ -236,7 +240,9 @@ class MAIN():
       self.GAME_LOGIC.is_win = False
     
     self.GAME_LOGIC.question()
-    
+  
+  def handleExport(self):
+    pass
 
 
 MAIN()
