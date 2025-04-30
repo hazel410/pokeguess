@@ -40,13 +40,13 @@ def ssp3(numbers, target):
     return smm, ind
 
 class GIF:
-  def __init__(self, screen, position, speed=1, scale=3, orient='center', flipx=False):
+  def __init__(self, screen, gif_location, position, speed=1, scale=3, orient='center', flipx=False):
     self.screen = screen
     self.position = position
     self.speed = speed
     self.orient = orient
     self.flipx = flipx
-    self.active_image = Image.open(c.GIF_LOCATION + c.GIF_LIST[random.randrange(0, c.GIF_COUNT - 1)] + '.gif')
+    self.active_image = Image.open(gif_location)
     self.num_frames = 1
     self.index = 0
     self.frame_list = []
@@ -67,6 +67,9 @@ class GIF:
       image = pygame.transform.scale_by(image, scale)
       self.frame_list.append(image)
     self.size = self.frame_list[0].get_size()
+  
+  def get_size(self):
+    return self.size
   
   def updatePosition(self, new_position):
     self.position = new_position

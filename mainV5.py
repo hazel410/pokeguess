@@ -38,7 +38,7 @@ class MAIN():
     self.question_number = "Question: " + str(self.GAME_LOGIC.question_num)
     self.mon_number = "Pokémon Left: " + str(self.GAME_LOGIC.num_of_pokemon)
     self.question_text = self.GAME_LOGIC.best_question
-    self.active_gif = functions.GIF(self.screen, [c.WINDOW_WIDTH * .7, c.WINDOW_HEIGHT / 2])
+    self.active_gif = functions.GIF(self.screen, c.GIF_LOCATION + c.GIF_LIST[random.randrange(0, c.GIF_COUNT - 1)] + '.gif', [c.WINDOW_WIDTH * .7, c.WINDOW_HEIGHT / 2])
     self.gamemode = 1
     self.active_buttons = []
     self.active_objects = []
@@ -178,13 +178,13 @@ class MAIN():
           pass
         elif argument > 0:
           self.gamemode = argument
-          self.active_gif = functions.GIF(self.screen, [c.WINDOW_WIDTH * .7, c.WINDOW_HEIGHT / 2])
+          self.active_gif = functions.GIF(self.screen, c.GIF_LOCATION + c.GIF_LIST[random.randrange(0, c.GIF_COUNT - 1)] + '.gif', [c.WINDOW_WIDTH * .7, c.WINDOW_HEIGHT / 2])
           if argument != 5:
             pygame.mixer.pause()
         elif argument == -1:
           self.quit = True
         elif argument == -3:
-          self.active_objects.append(physics.OBJECT(self.spawn_tbh))
+          self.active_objects.append(physics.OBJECT(self.screen, self.spawn_tbh))
         elif argument == -7:
           sfx.toggle_mute(self.is_muted)
           self.is_muted = not self.is_muted
@@ -206,7 +206,7 @@ class MAIN():
           pygame.mixer.pause()
       elif self.scroll_on_silly: # scrolling
         if argument == -3:
-          self.active_objects.append(physics.OBJECT(self.spawn_tbh))
+          self.active_objects.append(physics.OBJECT(self.screen, self.spawn_tbh))
 
   def handlePhysics(self):
     for object in self.active_objects:
