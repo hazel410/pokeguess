@@ -30,7 +30,6 @@ class MAIN():
     pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
     pygame.event.set_allowed(pygame.QUIT)
     self.clock = pygame.time.Clock()
-  
     self.GAME_LOGIC = logic.GAME_LOGIC()
 
     # loop vars
@@ -62,7 +61,6 @@ class MAIN():
       self.fps = self.clock.get_fps()
       self.mouse_pos = pygame.mouse.get_pos()
       self.loadActiveScreen()
-      self.export_text = "Export"
       
       if self.reset_gamemode and self.gamemode != 4:
         self.GAME_LOGIC = logic.GAME_LOGIC()
@@ -104,15 +102,16 @@ class MAIN():
     self.active_gif.render()
     mute_text = "Unmute SFX" if self.is_muted else "Mute SFX"
     silly_text = "Blåhaj" if self.spawn_tbh else "TBH"
-    scroll_text = "chill" if self.scroll_on_silly else "hell"
+    scroll_text = "No Scroll" if self.scroll_on_silly else "Scroll on :3"
     self.active_buttons = [
       button.BUTTON(self.screen, "Settings", (c.WINDOW_WIDTH / 2, 32, -1, -1), 0, font=c.FONT_40),
-      button.BUTTON(self.screen, self.export_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (2 / 5) + 16, 160, 70), -9),
       button.BUTTON(self.screen, "Home", (c.WINDOW_WIDTH - 36 - 5, 20 + 5, 72, 40), 1, font=c.FONT_24),
       button.BUTTON(self.screen, mute_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (1 / 5) + 16, 160, 70), -7, font=c.FONT_24),
-      button.BUTTON(self.screen, silly_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (3 / 5) + 16, 160, 70), -10),
-      button.BUTTON(self.screen, scroll_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (4 / 5) + 16, 160, 70), -8)
+      button.BUTTON(self.screen, silly_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (2 / 5) + 16, 160, 70), -10),
+      button.BUTTON(self.screen, scroll_text, (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (3 / 5) + 16, 160, 70), -8, font=c.FONT_24)
     ]
+    if c.RUNNING_LOCALLY:
+      self.active_buttons.append(button.BUTTON(self.screen, "Export", (c.WINDOW_WIDTH / 5, c.WINDOW_HEIGHT * (4 / 5) + 16, 160, 70), -9))
 
   def loadCredits(self):
     self.screen.blit(pygame.image.load(c.ROOTDIR + 'files/trevenaunt.png'), (50, 50))
@@ -194,7 +193,7 @@ class MAIN():
         elif argument == -8:
           self.scroll_on_silly = not self.scroll_on_silly
         elif argument == -9:
-          if logic.export(self.screen) == -1:
+          if logic.export(self.screen, logic.GAME_LOGIC()) == -1:
             return -1
         elif argument == -10:
           self.spawn_tbh = not self.spawn_tbh
@@ -241,8 +240,4 @@ class MAIN():
     
     self.GAME_LOGIC.question()
   
-  def handleExport(self):
-    pass
-
-
 MAIN()

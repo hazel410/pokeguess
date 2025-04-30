@@ -188,14 +188,13 @@ class GAME_LOGIC:
       elif self.best_category in self.category_list[0:(len(self.category_list) - 2)]:
           self.best_question = self.question_list[self.category_sums.index(self.best_value)]
 
-def export(screen):
+def export(screen, staticgame):
   """
   a function that solves every pokemon and exports that data
 
   :return: 0 if succesful, -1 elsewise
   """
 
-  staticgame = GAME_LOGIC()
   numberomon = len(staticgame.main_df)
   csvinterme = {}
   t0 = time.perf_counter()
@@ -222,7 +221,7 @@ def export(screen):
     pygame.display.flip()
   file = pd.DataFrame(dict([(key, pd.Series(value)) for key, value in csvinterme.items()]))
   filetrans = file.transpose()
-  filetrans.to_csv(c.ROOTDIR + 'out.csv')
+  filetrans.to_csv(c.ROOTDIR + 'export.csv')
   pygame.mixer.find_channel(True).play(sfx.cor)
   return 0
 

@@ -1,3 +1,0 @@
-todo
-- make tbh/blahaj include random pokemon
-- fix export/monsolver
