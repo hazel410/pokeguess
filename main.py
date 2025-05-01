@@ -235,5 +235,5 @@ class MAIN():
       self.GAME_LOGIC.is_win = False
     
     self.GAME_LOGIC.question()
-  
+
 MAIN()
