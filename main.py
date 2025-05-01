@@ -211,7 +211,9 @@ class MAIN():
     for object in self.active_objects:
       object.position_update()
       object.draw()
-      if object.dead:
+      if object.is_currently_collision:
+        pygame.mixer.find_channel(True).play(self.SFX.pip)
+      if object.is_dead:
         self.active_objects.remove(object)
         pygame.mixer.find_channel(True).play(self.SFX.bye)
     

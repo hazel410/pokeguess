@@ -23,7 +23,7 @@ class SFX:
     self.bye.set_volume(.1)
     self.che.set_volume(.1)
     self.cor.set_volume(.1)
-    self.pip.set_volume(.05)
+    self.pip.set_volume(.01)
 
   def toggle_mute(self, is_muted):
     if is_muted:

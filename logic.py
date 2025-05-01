@@ -187,6 +187,8 @@ class GAME_LOGIC:
       elif self.best_category in self.category_list[0:(len(self.category_list) - 2)]:
           self.best_question = self.question_list[self.category_sums.index(self.best_value)]
 
+### No Longer Game Class
+
 def export(screen, staticgame):
   """
   a function that solves every pokemon and exports that data
