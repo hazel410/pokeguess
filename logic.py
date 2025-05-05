@@ -1,14 +1,15 @@
-import pandas as pd
 import constants as c
 import functions as func
 import pygame
 import time
+import numpy as np
 
 class GAME_LOGIC:
   def __init__(self):
     # basic inits
     self.response_is_short = False
     self.question_num = 1
+
     self.main_df = pd.read_csv(c.CSV_LOCATION, skiprows=1)
     self.main_dict = pd.DataFrame.to_dict(self.main_df, orient='list')
     self.category_list = list(self.main_dict.keys())

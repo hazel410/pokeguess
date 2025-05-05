@@ -1,6 +1,7 @@
 import asyncio
 import pygame
 import random
+import numpy
 
 pygame.mixer.init()
 pygame.init()
