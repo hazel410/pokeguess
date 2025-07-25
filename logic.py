@@ -6,7 +6,12 @@ import numpy as np
 
 class GAME_LOGIC:
   def __init__(self):
-    pass
+    with open(c.CSV_LOCATION) as CSV:
+      self.file_list = CSV.read()
+    self.file_list = self.file_list.split("\n")
+    
+
+
 
   def input(self, user_input):
     pass
@@ -17,6 +22,9 @@ class GAME_LOGIC:
   def question(self):
     pass
 
+  def reset(self):
+    pass
+
 ### No Longer Game Class
 
 def export(screen, staticgame):
@@ -24,3 +32,6 @@ def export(screen, staticgame):
 
 def monsolver(pokemon_number):
   pass
+
+if __name__=='__main__':
+  GAME_LOGIC()

@@ -57,13 +57,9 @@ class MAIN():
       self.screen.fill(c.BACKGROUND_COLOR)
       self.fps = self.clock.get_fps()
       self.mouse_pos = pygame.mouse.get_pos()
-      self.loadActiveScreen()
       
-      if self.reset_gamemode and self.gamemode != 4:
-        self.GAME_LOGIC = logic.GAME_LOGIC()
-        self.reset_gamemode = False
-      self.active_buttons.append(button.BUTTON(self.screen, "FPS: " + str(round(self.fps)), (50, 25, 72, 40), 0, font=c.FONT_24, back=False))
-      self.active_buttons.append(button.BUTTON(self.screen, ':3', (30, c.WINDOW_HEIGHT - 25, 30, 30), -3, font=c.FONT_18))
+      self.loadActiveScreen()
+      self.loadPersistentButtons()
       self.displayButtons()
       self.handleEvents()
       self.handleClickArgs()
@@ -72,6 +68,10 @@ class MAIN():
       if self.quit:
         return
       await asyncio.sleep(0)
+  
+  def loadPersistentButtons(self):
+    self.active_buttons.append(button.BUTTON(self.screen, "FPS: " + str(round(self.fps)), (50, 25, 72, 40), 0, font=c.FONT_24, back=False))
+    self.active_buttons.append(button.BUTTON(self.screen, ':3', (30, c.WINDOW_HEIGHT - 25, 30, 30), -3, font=c.FONT_18))
   
   def loadActiveScreen(self):
     if self.gamemode == 1:
@@ -82,8 +82,6 @@ class MAIN():
       self.loadCredits()
     elif self.gamemode == 4:
       self.loadGameplay()
-    elif self.gamemode == 5:
-      self.loadRetry()
 
   def loadHome(self):
     self.active_gif.render()
@@ -137,11 +135,6 @@ class MAIN():
       button.BUTTON(self.screen, question_text, (c.WINDOW_WIDTH * (23 / 32), c.WINDOW_HEIGHT * (2 / 5), 252, 200), 0, font=c.FONT_24, wrap=True, button_color=c.GRAY, hover_color=c.GRAY)
     ]
 
-  def loadRetry(self):
-    self.loadGameplay()
-    self.gamemode = 4
-    self.GAME_LOGIC = logic.GAME_LOGIC()
-
   def displayButtons(self):
     for button in self.active_buttons:
       button.checkOverlapping(self.mouse_pos)
@@ -159,14 +152,12 @@ class MAIN():
       
       """The comment doesn't work because buttons are initialized
          every frame. you'd need to change that to have the mouse
-         function better :/"""
-
+         function more efficiently / better :p"""
 
             # button.mouse_down = True
       # elif event.type == pygame.MOUSEBUTTONUP:
       #   for button in self.active_buttons:
       #     if button.mouse_overlapping and button.mouse_down:
-      #       print("good mouse up")
       #       button.mouse_down = False
       #       self.clicked_args.append(button.click_arg)
   
@@ -222,7 +213,7 @@ class MAIN():
     if player_input == 1: # YES
       self.GAME_LOGIC.input(1)
       if self.GAME_LOGIC.num_of_pokemon == 1:
-        self.gamemode = 5
+        self.GAME_LOGIC.reset()
         pygame.mixer.pause()
     elif player_input == 0: # NO
       self.GAME_LOGIC.input(0)

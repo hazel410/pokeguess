@@ -8,7 +8,7 @@ RUNNING_LOCALLY = False
 NUMBER_OF_POKEMON_GENS = 9
 NUMBER_OF_POKEMON_TYPES = 18
 
-# Physics Constants [Intended Values]
+# Physics Constants and Intended Values
 PHYSICS_INIT_VELOCITY = 20      # positive values
 PHYSICS_GRAVITY = .3            # non-negative values
 PHYSICS_ELASTICITY = .99        # (0,1]
@@ -48,10 +48,10 @@ WRAP_X_PADDING = 10
 WRAP_Y_PADDING = .5
 
 # Fonts
-FONT_32 = pygame.font.Font('freesansbold.ttf', 32)
-FONT_24 = pygame.font.Font('freesansbold.ttf', 24)
-FONT_40 = pygame.font.Font('freesansbold.ttf', 40)
-FONT_18 = pygame.font.Font('freesansbold.ttf', 18)
+# FONT_32 = pygame.font.Font('freesansbold.ttf', 32)
+# FONT_24 = pygame.font.Font('freesansbold.ttf', 24)
+# FONT_40 = pygame.font.Font('freesansbold.ttf', 40)
+# FONT_18 = pygame.font.Font('freesansbold.ttf', 18)
 FONT_SIZE_TEST_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.?!\"\'"
 
 # Other
